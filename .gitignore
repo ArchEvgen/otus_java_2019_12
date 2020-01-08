@@ -24,3 +24,7 @@ hs_err_pid*
 
 # IDE files
 .idea/*
+*.iml
+
+# buid artifacts
+hw01-maven/target/*
