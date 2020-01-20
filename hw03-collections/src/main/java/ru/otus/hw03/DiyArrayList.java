@@ -60,17 +60,6 @@ public class DiyArrayList<T> implements List<T> {
         throw new UnsupportedOperationException();
     }
 
-    private void grow() {
-        var newCapacity = array.length << 1;
-        growTo(newCapacity);
-    }
-
-    private void growTo(int newCapacity) {
-        var newArray = (T[]) new Object[newCapacity];
-        System.arraycopy(array, 0, newArray, 0, size);
-        array = newArray;
-    }
-
     @Override
     public boolean remove(Object o) {
         throw new UnsupportedOperationException();
@@ -187,6 +176,22 @@ public class DiyArrayList<T> implements List<T> {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public String toString() {
+        return "[" + this.stream().map(Object::toString).collect(Collectors.joining(", ")) + "]";
+    }
+
+    private void grow() {
+        var newCapacity = array.length << 1;
+        growTo(newCapacity);
+    }
+
+    private void growTo(int newCapacity) {
+        var newArray = (T[]) new Object[newCapacity];
+        System.arraycopy(array, 0, newArray, 0, size);
+        array = newArray;
+    }
+
     private class DiyListIterator implements ListIterator<T> {
         private transient int iteratorVersion = version;
         private transient int cursor;
@@ -251,14 +256,9 @@ public class DiyArrayList<T> implements List<T> {
             iteratorVersion = version;
         }
 
-        final void checkVersion() {
+        private void checkVersion() {
             if (version != iteratorVersion)
                 throw new ConcurrentModificationException();
         }
-    }
-
-    @Override
-    public String toString() {
-        return "[" + this.stream().map(Object::toString).collect(Collectors.joining(", ")) + "]";
     }
 }
