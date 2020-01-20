@@ -60,12 +60,12 @@ public class DiyArrayList<T> implements List<T> {
         throw new UnsupportedOperationException();
     }
 
-    protected void grow() {
+    private void grow() {
         var newCapacity = array.length << 1;
         growTo(newCapacity);
     }
 
-    protected void growTo(int newCapacity) {
+    private void growTo(int newCapacity) {
         var newArray = (T[]) new Object[newCapacity];
         System.arraycopy(array, 0, newArray, 0, size);
         array = newArray;
