@@ -1,4 +1,4 @@
-package ru.otus.hw03;
+package ru.otus.hw02;
 
 import java.util.Arrays;
 import java.util.Collection;

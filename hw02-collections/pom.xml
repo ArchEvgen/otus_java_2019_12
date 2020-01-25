@@ -9,8 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>hw03-collections</artifactId>
-    <name>hw03-collections</name>
+    <artifactId>hw02-collections</artifactId>
+    <name>hw02-collections</name>
 
     <packaging>jar</packaging>
 
@@ -26,7 +26,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ru.otus.hw03.DiyArrayListDemo</mainClass>
+                            <mainClass>ru.otus.hw02.DiyArrayListDemo</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
