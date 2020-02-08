@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.LinkedList;
 
 public class Benchmark {
-    private int sleepMills = 100;
+//    private int sleepMills = 100;
     private LinkedList<Instant> list = new LinkedList<>();
     private int batchSize = 100000;
     private int removeSize = 90000;
@@ -20,7 +20,9 @@ public class Benchmark {
         while (true) {
             addBatch();
             cleanup();
-            Thread.sleep(sleepMills);
+//            Thread.sleep(sleepMills);
+            System.out.println(String.format("uptime: %s, iterationCounter: %s, sumLatency: %s, maxLatency: %s",
+                    uptime, iterationCounter, sumLatency, maxLatency));
         }
     }
 
