@@ -29,3 +29,4 @@ hs_err_pid*
 # buid artifacts
 hw01-maven/target/*
 hw02-collections/target/*
+hw04-log/target/*

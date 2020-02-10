@@ -18,7 +18,7 @@ public class Ioc {
     }
 
     static Calculator createCalculatorWithoutLog() throws NoSuchMethodException {
-        return createProxy(new CalculatorWithoutLog(), Calculator.class);
+        return createProxy(new CalculatorImplWithoutLog(), Calculator.class);
     }
 
     static <T> T createProxy(T realObject, Class<T> interfaceClass) throws NoSuchMethodException {

@@ -1,6 +1,6 @@
 package ru.otus.hw04;
 
-public class CalculatorWithoutLog implements Calculator {
+public class CalculatorImplWithoutLog implements Calculator {
     @Override
     public int calculation(int param) {
         return param;
