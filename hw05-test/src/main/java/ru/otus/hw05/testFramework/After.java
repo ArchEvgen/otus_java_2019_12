@@ -1,4 +1,4 @@
-package ru.otus.hw04.testFramework;
+package ru.otus.hw05.testFramework;
 
 import java.lang.annotation.Retention;
 

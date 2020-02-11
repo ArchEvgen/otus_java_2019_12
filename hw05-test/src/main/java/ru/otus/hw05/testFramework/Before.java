@@ -1,9 +1,9 @@
-package ru.otus.hw04.testFramework;
+package ru.otus.hw05.testFramework;
 
 import java.lang.annotation.Retention;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Retention(RUNTIME)
-public @interface Test {
+public @interface Before {
 }

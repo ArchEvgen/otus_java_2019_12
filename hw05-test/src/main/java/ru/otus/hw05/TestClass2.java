@@ -1,6 +1,6 @@
-package ru.otus.hw04;
+package ru.otus.hw05;
 
-import ru.otus.hw04.testFramework.Test;
+import ru.otus.hw05.testFramework.Test;
 
 public class TestClass2 {
     @Test

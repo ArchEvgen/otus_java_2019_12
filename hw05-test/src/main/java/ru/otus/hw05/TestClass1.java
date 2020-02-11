@@ -1,8 +1,8 @@
-package ru.otus.hw04;
+package ru.otus.hw05;
 
-import ru.otus.hw04.testFramework.After;
-import ru.otus.hw04.testFramework.Before;
-import ru.otus.hw04.testFramework.Test;
+import ru.otus.hw05.testFramework.After;
+import ru.otus.hw05.testFramework.Before;
+import ru.otus.hw05.testFramework.Test;
 
 public class TestClass1 {
     private int x;
