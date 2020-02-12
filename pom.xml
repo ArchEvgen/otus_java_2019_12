@@ -18,6 +18,7 @@
         <module>hw01-maven</module>
         <module>hw02-collections</module>
         <module>hw03-gc</module>
+        <module>hw04-log</module>
     </modules>
 
     <properties>
