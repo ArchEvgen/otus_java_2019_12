@@ -1,6 +1,6 @@
 package ru.otus.hw05.testFramework;
 
-class TestResult {
+public class TestResult {
     private int failed;
     private int passed;
 

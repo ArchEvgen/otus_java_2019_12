@@ -26,7 +26,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ru.otus.hw05.testFramework.TestRun</mainClass>
+                            <mainClass>ru.otus.hw05.TestDemo</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
