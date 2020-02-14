@@ -1,5 +1,6 @@
 package ru.otus.hw06;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -66,6 +67,14 @@ public class CashImpl implements Cash {
         public CashImpl build() {
             return new CashImpl(bills);
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Cash)) return false;
+        var cash = (Cash)obj;
+        return Denomination.SORTED_BY_VALUE_DESC.stream()
+                .allMatch(d -> cash.getBills(d) == this.getBills(d));
     }
 
     @Override
