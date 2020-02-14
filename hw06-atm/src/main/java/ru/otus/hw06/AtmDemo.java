@@ -5,7 +5,7 @@ public class AtmDemo {
         Atm atm = createAtm();
         System.out.println(String.format("Initial state: %s, total: %s", atm, atm.getCashSum()));
 
-        Cash a = Cash.builder()
+        CashImpl a = CashImpl.builder()
                 .with(Denomination.V100, 2)
                 .with(Denomination.V5, 1)
                 .build();
@@ -31,7 +31,7 @@ public class AtmDemo {
     }
 
     private static Atm createAtm() {
-        return new Atm(Cash.builder()
+        return new AtmImpl(CashImpl.builder()
                 .with(Denomination.V1000, 1)
                 .with(Denomination.V100, 0)
                 .with(Denomination.V50, 6)
