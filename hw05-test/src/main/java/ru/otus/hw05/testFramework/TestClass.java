@@ -26,43 +26,58 @@ public class TestClass {
     }
 
     private boolean runTest(Method testMethod) throws Exception {
-        boolean result = false;
-        String methodName = testClass.getName() + "." + testMethod.getName();
         Object testObject = testClass.getConstructor().newInstance();
-        boolean beforePassed = false;
+
+        boolean beforePassed = invokeBefore(testObject);
+        boolean testPassed = false;
+        if (beforePassed) {
+            testPassed = invokeTest(testObject, testMethod);
+        }
+        boolean afterPassed = invokeAfter(testObject);
+
+        return beforePassed && testPassed && afterPassed;
+    }
+
+    private boolean invokeBefore(Object testObject) {
         try {
             for (Method method : before) {
                 method.invoke(testObject);
             }
-            beforePassed = true;
+            return true;
         } catch (InvocationTargetException ex) {
             System.out.println(testClass.getName() + " @Before method error: " + ex.getTargetException());
         } catch (Exception ex) {
             System.out.println(testClass.getName() + " @Before method error: " + ex);
         }
+        return false;
+    }
 
-        if (beforePassed) {
-            try {
-                testMethod.invoke(testObject);
-                System.out.println(methodName + " passed");
-                result = true;
-            } catch (InvocationTargetException ex) {
-                System.out.println(methodName + " failed: \r\n" + ex.getTargetException());
-            } catch (Exception ex) {
-                System.out.println(methodName + " failed: \r\n" + ex);
-            }
-        }
-
+    private boolean invokeAfter(Object testObject) {
         try {
             for (Method method : after) {
                 method.invoke(testObject);
             }
+            return true;
         } catch (InvocationTargetException ex) {
             System.out.println(testClass.getName() + " @After method error: " + ex.getTargetException());
         } catch (Exception ex) {
             System.out.println(testClass.getName() + " @After method error: " + ex);
         }
-        return result;
+        return false;
+    }
+
+    private boolean invokeTest(Object testObject, Method testMethod) {
+        String methodName = testClass.getName() + "." + testMethod.getName();
+        try {
+            testMethod.invoke(testObject);
+            System.out.println(methodName + " passed");
+            return true;
+        } catch (InvocationTargetException ex) {
+            System.out.println(methodName + " failed: \r\n" + ex.getTargetException());
+        } catch (Exception ex) {
+            System.out.println(methodName + " failed: \r\n" + ex);
+        }
+        return false;
     }
 
     private void validate() {
