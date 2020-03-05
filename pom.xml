@@ -20,6 +20,7 @@
         <module>hw03-gc</module>
         <module>hw04-log</module>
         <module>hw06-atm</module>
+        <module>hw07-atmd</module>
     </modules>
 
     <properties>
