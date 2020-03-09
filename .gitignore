@@ -30,3 +30,6 @@ hs_err_pid*
 hw01-maven/target/*
 hw02-collections/target/*
 hw04-log/target/*
+hw05-test/target/*
+hw07-atmd/target/*
+hw08-json/target/*
