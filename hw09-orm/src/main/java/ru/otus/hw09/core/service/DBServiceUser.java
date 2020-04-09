@@ -15,4 +15,6 @@ public interface DBServiceUser {
   long saveAccount(Account account);
 
   Optional<Account> getAccount(long id);
+
+  void updateAccount(Account account);
 }

@@ -11,4 +11,5 @@ public class Account {
     private long no;
     private String type;
     private BigDecimal rest;
+    private boolean admin;
 }

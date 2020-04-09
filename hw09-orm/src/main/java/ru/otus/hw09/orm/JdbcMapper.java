@@ -1,14 +1,11 @@
 package ru.otus.hw09.orm;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Savepoint;
-import java.sql.Statement;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,24 +20,21 @@ public class JdbcMapper<T> {
         this.queryGenerator = queryGenerator;
     }
 
-    public long insert(Connection connection, T obj) throws SQLException, IllegalAccessException {
-        Savepoint savePoint = connection.setSavepoint();
-        var sql = queryGenerator.insert(entityInfo);
-        try (PreparedStatement pst = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+    public String getInsertQuery() {
+        return queryGenerator.insert(entityInfo);
+    }
+
+    public void addInsertQueryParams(PreparedStatement pst, T obj) throws SQLException {
+        try {
             List<Field> fields = entityInfo.getFields();
             for (int i = 0; i < fields.size(); i++) {
                 Field field = fields.get(i);
                 addParam(pst, i + 1, field, obj);
             }
-            pst.executeUpdate();
-            try (ResultSet rs = pst.getGeneratedKeys()) {
-                rs.next();
-                return rs.getInt(1);
-            }
-        } catch (SQLException | IllegalAccessException ex) {
-            connection.rollback(savePoint);
-            log.error(ex.getMessage(), ex);
+        } catch (SQLException ex) {
             throw ex;
+        } catch (Exception ex) {
+            throw new JdbcMapperException("Error add params of " + obj.toString(), ex);
         }
     }
 
@@ -83,46 +77,44 @@ public class JdbcMapper<T> {
         field.setAccessible(false);
     }
 
-    public void update(Connection connection, T obj) throws IllegalAccessException, SQLException {
-        Savepoint savePoint = connection.setSavepoint();
-        var sql = queryGenerator.update(entityInfo);
-        try (PreparedStatement pst = connection.prepareStatement(sql)) {
+    public String getUpdateQuery() {
+        return queryGenerator.update(entityInfo);
+    }
+
+    public void addUpdateQueryParams(PreparedStatement pst, T obj) throws SQLException {
+        try {
             List<Field> fields = entityInfo.getFields();
             for (int i = 0; i < fields.size(); i++) {
                 Field field = fields.get(i);
                 addParam(pst, i + 1, field, obj);
             }
             addParam(pst, fields.size() + 1, entityInfo.getKeyField(), obj);
-            pst.executeUpdate();
         } catch (SQLException ex) {
-            connection.rollback(savePoint);
-            log.error(ex.getMessage(), ex);
             throw ex;
+        } catch (Exception ex) {
+            throw new JdbcMapperException("Error add params of " + obj.toString(), ex);
         }
     }
 
-    public T getById(Connection connection, long id) throws IllegalAccessException, SQLException, NoSuchMethodException,
-            InvocationTargetException, InstantiationException {
-        var sql = queryGenerator.select(entityInfo);
-        try (PreparedStatement pst = connection.prepareStatement(sql)) {
-            pst.setLong(1, id);
-            try (ResultSet resultSet = pst.executeQuery()) {
-                try {
-                    if (resultSet.next()) {
-                        T obj = (T) entityInfo.getEntityClass().getDeclaredConstructor().newInstance();
-                        entityInfo.getKeyField().setAccessible(true);
-                        entityInfo.getKeyField().setLong(obj, id);
-                        entityInfo.getKeyField().setAccessible(false);
-                        for (var field : entityInfo.getFields()) {
-                            readField(resultSet, field, obj);
-                        }
-                        return obj;
-                    }
-                } catch (SQLException e) {
-                    log.error(e.getMessage(), e);
+    public String getSelectByIdQuery() {
+        return queryGenerator.select(entityInfo);
+    }
+
+    public T readObject(ResultSet resultSet) throws SQLException {
+        try {
+            if (resultSet.next()) {
+                T obj = (T) entityInfo.getEntityClass().getDeclaredConstructor().newInstance();
+                readField(resultSet, entityInfo.getKeyField(), obj);
+                for (var field : entityInfo.getFields()) {
+                    readField(resultSet, field, obj);
                 }
-                return null;
+                return obj;
             }
+            return null;
+        } catch (SQLException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new JdbcMapperException("Error reading object " + entityInfo.getEntityClass().getName(), ex);
         }
     }
 }

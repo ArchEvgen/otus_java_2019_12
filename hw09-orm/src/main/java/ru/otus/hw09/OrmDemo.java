@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Optional;
 
 import javax.sql.DataSource;
 
@@ -16,12 +15,13 @@ import ru.otus.hw09.core.model.User;
 import ru.otus.hw09.core.service.DBServiceUser;
 import ru.otus.hw09.core.service.DbServiceUserImpl;
 import ru.otus.hw09.h2.DataSourceH2;
+import ru.otus.hw09.jdbc.DbExecutor;
+import ru.otus.hw09.jdbc.dao.AccountDaoJdbc;
+import ru.otus.hw09.jdbc.dao.UserDaoJdbc;
 import ru.otus.hw09.jdbc.sessionmanager.SessionManagerJdbc;
 import ru.otus.hw09.orm.EntityInfoStorage;
 import ru.otus.hw09.orm.JdbcMapper;
 import ru.otus.hw09.orm.SqlQueryGenerator;
-import ru.otus.hw09.orm.dao.AccountDaoJdbcMapper;
-import ru.otus.hw09.orm.dao.UserDaoJdbcMapper;
 
 @Slf4j
 public class OrmDemo {
@@ -48,6 +48,12 @@ public class OrmDemo {
         long id = dbServiceUser.saveAccount(account);
         account = dbServiceUser.getAccount(id).get();
         log.info("created account: {}", account.toString());
+        account.setType("ultra");
+        account.setRest(BigDecimal.valueOf(100500));
+        account.setAdmin(true);
+        dbServiceUser.updateAccount(account);
+        account = dbServiceUser.getAccount(id).get();
+        log.info("updated account: {}", account.toString());
     }
 
     private void runUserDemo() {
@@ -71,8 +77,8 @@ public class OrmDemo {
         entityInfoStorage = new EntityInfoStorage();
         userJdbcMapper = new JdbcMapper<User>(entityInfoStorage.getEntityInfo(User.class), new SqlQueryGenerator());
         accountJdbcMapper = new JdbcMapper<Account>(entityInfoStorage.getEntityInfo(Account.class), new SqlQueryGenerator());
-        userDao = new UserDaoJdbcMapper(userJdbcMapper, sessionManager);
-        accountDao = new AccountDaoJdbcMapper(accountJdbcMapper, sessionManager);
+        userDao = new UserDaoJdbc(sessionManager, new DbExecutor<>(), userJdbcMapper);
+        accountDao = new AccountDaoJdbc(sessionManager, new DbExecutor<>(), accountJdbcMapper);
         dbServiceUser = new DbServiceUserImpl(userDao, accountDao);
     }
 
@@ -83,7 +89,7 @@ public class OrmDemo {
                 pst.executeUpdate();
             }
             try (PreparedStatement pst = connection.prepareStatement(
-                    "create table account(no bigint(20) NOT NULL auto_increment, type varchar(255), rest number)")) {
+                    "create table account(no bigint(20) NOT NULL auto_increment, type varchar(255), rest number, admin boolean)")) {
                 pst.executeUpdate();
             }
         }
