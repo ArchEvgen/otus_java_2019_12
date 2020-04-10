@@ -23,6 +23,7 @@
         <module>hw07-atmd</module>
         <module>hw08-json</module>
         <module>hw09-orm</module>
+        <module>hw10-hibernate</module>
     </modules>
 
     <properties>
@@ -37,6 +38,7 @@
         <logback.version>1.2.3</logback.version>
         <slf4j.version>1.7.25</slf4j.version>
         <h2.version>1.4.197</h2.version>
+        <hibernate-core.version>5.4.4.Final</hibernate-core.version>
         <lombok-maven-plugin.version>1.18.10.0</lombok-maven-plugin.version>
         <lombok.addOutputDirectory>false</lombok.addOutputDirectory>
         <lombok.sourceDirectory>${project.basedir}/src/main/java</lombok.sourceDirectory>
