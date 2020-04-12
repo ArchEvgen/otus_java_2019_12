@@ -1,5 +1,6 @@
 package ru.otus.hw10;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +37,7 @@ public class HibernateDemo {
     user1.setAge(42);
     user1.setAddress(address1);
     user1.setPhones(List.of(phone1));
+    phone1.setUser(user1);
     long id = dbServiceUser.saveUser(user1);
     Optional<User> mayBeCreatedUser = dbServiceUser.getUser(id);
     printSavedUser(id, mayBeCreatedUser);
@@ -43,6 +45,7 @@ public class HibernateDemo {
     var user2 = new User();
     user2.setId(id);
     user2.setName("Петя");
+    user2.setPhones(new ArrayList<>());
     id = dbServiceUser.saveUser(user2);
     Optional<User> mayBeUpdatedUser = dbServiceUser.getUser(id);
     printSavedUser(id, mayBeUpdatedUser);
