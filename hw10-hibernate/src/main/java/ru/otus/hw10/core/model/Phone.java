@@ -24,8 +24,8 @@ public class Phone {
     @Column(name = "id")
     private long id;
 
-    @ManyToOne()
-    @JoinColumn(name = "user_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(referencedColumnName = "id", name = "user_id")
     private User user;
 
     @Column(name = "number")

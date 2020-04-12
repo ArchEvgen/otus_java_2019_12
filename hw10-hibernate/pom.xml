@@ -66,7 +66,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ru.otus.hw09.OrmDemo</mainClass>
+                            <mainClass>ru.otus.hw10.HibernateDemo</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
