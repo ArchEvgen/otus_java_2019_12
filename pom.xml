@@ -24,6 +24,7 @@
         <module>hw08-json</module>
         <module>hw09-orm</module>
         <module>hw10-hibernate</module>
+        <module>hw11-cache</module>
     </modules>
 
     <properties>

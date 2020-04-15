@@ -35,3 +35,4 @@ hw07-atmd/target/*
 hw08-json/target/*
 hw09-orm/target/*
 hw10-hibernate/target/*
+hw11-cache/target/*
