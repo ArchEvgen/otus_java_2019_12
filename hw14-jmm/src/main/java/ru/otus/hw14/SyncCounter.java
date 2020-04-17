@@ -3,12 +3,13 @@ package ru.otus.hw14;
 import java.util.function.IntConsumer;
 
 public class SyncCounter implements Counter {
+    private final IntConsumer printFunc;
+    private final Object syncObj = new Object();
     private boolean thread1Turn;
     private int max;
     private int counter1;
     private int counter2;
     private int increment;
-    private final IntConsumer printFunc;
 
     public SyncCounter(boolean printResult) {
         if (printResult) {
@@ -35,33 +36,33 @@ public class SyncCounter implements Counter {
         thread1.join();
     }
 
-    private synchronized boolean isThread1Turn() {
-        return thread1Turn;
-    }
-
-    private synchronized void swapTurn() {
+    private void swapTurn() {
         thread1Turn = !thread1Turn;
     }
 
     private void step1() {
         while (counter1 >= 0) {
-            if (isThread1Turn()) {
-                printFunc.accept(counter1);
-                counter1 += increment;
-                swapTurn();
+            synchronized (syncObj) {
+                if (thread1Turn) {
+                    printFunc.accept(counter1);
+                    counter1 += increment;
+                    swapTurn();
+                }
             }
         }
     }
 
     private void step2() {
         while (counter2 >= 0) {
-            if (!isThread1Turn()) {
-                printFunc.accept(counter2);
-                counter2 += increment;
-                if (counter2 == max && counter1 == max) {
-                    increment = -1;
+            synchronized (syncObj) {
+                if (!thread1Turn) {
+                    printFunc.accept(counter2);
+                    counter2 += increment;
+                    if (counter2 == max && counter1 == max) {
+                        increment = -1;
+                    }
+                    swapTurn();
                 }
-                swapTurn();
             }
         }
     }
