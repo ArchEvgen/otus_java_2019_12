@@ -2,6 +2,7 @@ package ru.otus.hw14;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.function.IntConsumer;
 
 public class JmmDemo {
     public static void main(String[] args) throws InterruptedException {
@@ -13,19 +14,21 @@ public class JmmDemo {
 
     public static void testPrintOrder() throws InterruptedException {
         var max = 10;
+        IntConsumer printFunc = (i) -> System.out.println(Thread.currentThread().getName() + ": " + i);
         System.out.println("<AtomicCounter>");
-        Counter counter = new AtomicCounter(true);
+        Counter counter = new AtomicCounter(printFunc);
         counter.run(max);
         System.out.println("</AtomicCounter>");
         System.out.println("<SyncCounter>");
-        counter = new SyncCounter(true);
+        counter = new SyncCounter(printFunc);
         counter.run(max);
         System.out.println("<SyncCounter>");
     }
 
     public static void testAtomicDomination() throws InterruptedException {
-        testPerfomance(new AtomicCounter(false));
-        testPerfomance(new SyncCounter(false));
+        IntConsumer printFunc = (i) -> {};
+        testPerfomance(new AtomicCounter(printFunc));
+        testPerfomance(new SyncCounter(printFunc));
     }
 
     public static void testPerfomance(Counter counter) throws InterruptedException {

@@ -11,12 +11,8 @@ public class SyncCounter implements Counter {
     private int counter2;
     private int increment;
 
-    public SyncCounter(boolean printResult) {
-        if (printResult) {
-            printFunc = (i) -> System.out.println(Thread.currentThread().getName() + ": " + i);
-        } else {
-            printFunc = (i) -> {};
-        }
+    public SyncCounter(IntConsumer printFunc) {
+        this.printFunc = printFunc;
     }
 
     public void run(int max) throws InterruptedException {

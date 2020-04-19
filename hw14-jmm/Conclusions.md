@@ -1,5 +1,5 @@
-AtomicCounter counts to 100000 at 0.034814
-SyncCounter counts to 100000 at 0.332373
+AtomicCounter counts to 100000 at 0.032141
+SyncCounter counts to 100000 at 0.140043
 
-AtomicCounter counts to 1000000 at 0.257641
-SyncCounter counts to 1000000 at 2.55106
+AtomicCounter counts to 1000000 at 0.29147
+SyncCounter counts to 1000000 at 10.755091

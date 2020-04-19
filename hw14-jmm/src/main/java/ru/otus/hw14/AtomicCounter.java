@@ -8,15 +8,11 @@ public class AtomicCounter implements Counter {
     private int max;
     private int counter1;
     private int counter2;
-    private int increment = 1;
+    private volatile int increment = 1;
     private final IntConsumer printFunc;
 
-    public AtomicCounter(boolean printResult) {
-        if (printResult) {
-            printFunc = (i) -> System.out.println(Thread.currentThread().getName() + ": " + i);
-        } else {
-            printFunc = (i) -> {};
-        }
+    public AtomicCounter(IntConsumer printFunc) {
+        this.printFunc = printFunc;
     }
 
     public void run(int max) throws InterruptedException {
