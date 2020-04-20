@@ -36,11 +36,6 @@ public class UserDaoHibernate implements UserDao {
   }
 
   @Override
-  public Optional<User> findRandomUser() {
-    return findById(rnd.nextInt(6) + 1);
-  }
-
-  @Override
   public Optional<User> findByLogin(String login) {
     DatabaseSessionHibernate currentSession = sessionManager.getCurrentSession();
     try {

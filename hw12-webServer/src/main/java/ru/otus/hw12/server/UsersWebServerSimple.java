@@ -7,24 +7,22 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import ru.otus.hw12.dao.UserDao;
 import ru.otus.hw12.helpers.FileSystemHelper;
 import ru.otus.hw12.services.TemplateProcessor;
+import ru.otus.hw12.services.UserService;
 import ru.otus.hw12.servlet.AdminServlet;
-import ru.otus.hw12.servlet.UsersApiServlet;
-import ru.otus.hw12.servlet.UsersServlet;
 
 public class UsersWebServerSimple implements UsersWebServer {
     private static final String START_PAGE_NAME = "index.html";
     private static final String COMMON_RESOURCES_DIR = "static";
 
-    private final UserDao userDao;
+    private final UserService userService;
     private final Gson gson;
     protected final TemplateProcessor templateProcessor;
     private final Server server;
 
-    public UsersWebServerSimple(int port, UserDao userDao, Gson gson, TemplateProcessor templateProcessor) {
-        this.userDao = userDao;
+    public UsersWebServerSimple(int port, UserService userService, Gson gson, TemplateProcessor templateProcessor) {
+        this.userService = userService;
         this.gson = gson;
         this.templateProcessor = templateProcessor;
         server = new Server(port);
@@ -76,9 +74,7 @@ public class UsersWebServerSimple implements UsersWebServer {
 
     private ServletContextHandler createServletContextHandler() {
         ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        servletContextHandler.addServlet(new ServletHolder(new UsersServlet(templateProcessor, userDao)), "/users");
-        servletContextHandler.addServlet(new ServletHolder(new UsersApiServlet(userDao, gson)), "/api/user/*");
-        servletContextHandler.addServlet(new ServletHolder(new AdminServlet(templateProcessor, userDao)), "/admin");
+        servletContextHandler.addServlet(new ServletHolder(new AdminServlet(templateProcessor, userService)), "/admin");
         return servletContextHandler;
     }
 }

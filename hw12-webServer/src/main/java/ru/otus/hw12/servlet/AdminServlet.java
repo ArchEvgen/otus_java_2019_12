@@ -9,19 +9,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ru.otus.hw12.dao.UserDao;
 import ru.otus.hw12.model.User;
 import ru.otus.hw12.services.TemplateProcessor;
-import ru.otus.hw12.sessionmanager.SessionManager;
+import ru.otus.hw12.services.UserService;
 
 public class AdminServlet extends HttpServlet {
     private static final String ADMIN_PAGE_TEMPLATE = "admin.html";
 
     private final TemplateProcessor templateProcessor;
-    private final UserDao userDao;
+    private final UserService userService;
 
-    public AdminServlet(TemplateProcessor templateProcessor, UserDao userDao) {
-        this.userDao = userDao;
+    public AdminServlet(TemplateProcessor templateProcessor, UserService userService) {
+        this.userService = userService;
         this.templateProcessor = templateProcessor;
     }
 
@@ -33,10 +32,7 @@ public class AdminServlet extends HttpServlet {
     private void renderAdminPage(HttpServletResponse response) throws IOException {
         Map<String, Object> paramsMap = new HashMap<>();
         response.setContentType("text/html");
-        try (SessionManager sessionManager = userDao.getSessionManager()) {
-            sessionManager.beginSession();
-            paramsMap.put("users", userDao.getAll());
-        }
+        paramsMap.put("users", userService.getAll());
         response.getWriter().println(templateProcessor.getPage(ADMIN_PAGE_TEMPLATE, paramsMap));
     }
 
@@ -45,10 +41,7 @@ public class AdminServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         String name = request.getParameter("name");
-        try (var sessionManager = userDao.getSessionManager()) {
-            sessionManager.beginSession();
-            userDao.saveUser(new User(0, name, login, password));
-        }
+        userService.saveUser(new User(0, name, login, password));
         renderAdminPage(response);
     }
 
