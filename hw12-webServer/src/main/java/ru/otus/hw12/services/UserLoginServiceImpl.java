@@ -8,11 +8,11 @@ import ru.otus.hw12.sessionmanager.SessionManager;
 
 import java.util.Optional;
 
-public class UserDaoLoginServiceImpl extends AbstractLoginService {
+public class UserLoginServiceImpl extends AbstractLoginService {
 
     private final UserDao userDao;
 
-    public UserDaoLoginServiceImpl(UserDao userDao) {
+    public UserLoginServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
 
