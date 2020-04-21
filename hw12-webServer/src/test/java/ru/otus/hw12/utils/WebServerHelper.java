@@ -1,4 +1,4 @@
-package ru.otus.hw12.server.utils;
+package ru.otus.hw12.utils;
 
 import org.eclipse.jetty.http.HttpMethod;
 
@@ -10,7 +10,7 @@ import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.util.List;
 
-import static ru.otus.hw12.server.utils.HttpUrlConnectionHelper.sendRequest;
+import static ru.otus.hw12.utils.HttpUrlConnectionHelper.sendRequest;
 
 public final class WebServerHelper {
 

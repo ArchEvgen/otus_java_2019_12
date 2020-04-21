@@ -28,11 +28,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static ru.otus.hw12.server.utils.HttpUrlConnectionHelper.buildUrl;
-import static ru.otus.hw12.server.utils.HttpUrlConnectionHelper.readResponseFromConnection;
-import static ru.otus.hw12.server.utils.HttpUrlConnectionHelper.sendRequest;
-import static ru.otus.hw12.server.utils.WebServerHelper.COOKIE_HEADER;
-import static ru.otus.hw12.server.utils.WebServerHelper.login;
+import static ru.otus.hw12.utils.HttpUrlConnectionHelper.buildUrl;
+import static ru.otus.hw12.utils.HttpUrlConnectionHelper.readResponseFromConnection;
+import static ru.otus.hw12.utils.HttpUrlConnectionHelper.sendRequest;
+import static ru.otus.hw12.utils.WebServerHelper.COOKIE_HEADER;
+import static ru.otus.hw12.utils.WebServerHelper.login;
 
 @DisplayName("Тест сервера должен ")
 class UsersWebServerImplTest {

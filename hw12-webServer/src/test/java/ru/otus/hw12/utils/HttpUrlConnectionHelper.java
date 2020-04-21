@@ -1,4 +1,4 @@
-package ru.otus.hw12.server.utils;
+package ru.otus.hw12.utils;
 
 import org.eclipse.jetty.http.HttpMethod;
 
