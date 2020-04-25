@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>List of all users</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .users, .users td {
+            border: 1px solid lightgray;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        a {
+            display: block;
+        }
+    </style>
+
+    <style th:inline="text">
+        h3 {
+            background: url([[@{/listmark.png}]]) no-repeat;
+            padding: 2px;
+            padding-left: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h3>Users:</h3>
+
+    <table class="users">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}">1</td>
+                <td th:text="${user.name}">John Doe</td>
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/user/create}" href="userCreate.html">New user</a>
+    <br/>
+    <form id="fill-form" th:action="@{/user/generate_test_data}" th:method="post" accept-charset="utf-8">
+        <div class="row">
+            <button type="submit">Generate test users</button>
+        </div>
+    </form>
+    <br/><br/>
+    <h3>Greetings:</h3>
+    <a th:href="@{/hello?name=Vasya}">Old school greeting</a>
+    <a th:href="@{/hello/Jone}">REST API style greeting</a>
+
+</body>
+</html>
