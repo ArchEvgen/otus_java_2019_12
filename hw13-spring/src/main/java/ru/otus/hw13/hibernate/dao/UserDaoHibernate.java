@@ -20,7 +20,6 @@ import ru.otus.hw13.hibernate.sessionmanager.SessionManagerHibernate;
 public class UserDaoHibernate implements UserDao {
   private static Logger logger = LoggerFactory.getLogger(UserDaoHibernate.class);
   private final SessionManagerHibernate sessionManager;
-  private final Random rnd = new Random();
 
   public UserDaoHibernate(SessionManagerHibernate sessionManager) {
     this.sessionManager = sessionManager;
