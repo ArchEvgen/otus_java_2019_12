@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/static/app.js"></script>
+    <meta charset="UTF-8"/>
+    <title>List of all users</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .users, .users td {
+            border: 1px solid lightgray;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        a {
+            display: block;
+        }
+    </style>
+
+    <style th:inline="text">
+        h3 {
+            padding: 2px;
+            padding-left: 2px;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <div>
+            <button id="connect" type="submit">Connect</button>
+            <button id="disconnect" type="submit" disabled="disabled">Disconnect</button>
+        </div>
+    </form>
+    <br/>
+    <h3>Create new user:</h3>
+    <form id="create-form">
+        <div class="row">
+            <label for="userName">Name:</label>
+            <input id="userName" name="name" type="text" value="John Doe"/>
+            <button id="send" type="submit">Save</button>
+        </div>
+    </form>
+    <br/>
+    <h3>Users:</h3>
+    <table class="users">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody id="usersTable">
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}">1</td>
+                <td th:text="${user.name}">John Doe</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
