@@ -38,3 +38,6 @@ hw10-hibernate/target/*
 hw11-cache/target/*
 hw12-webServer/.idea/*
 hw12-webServer/target/*
+hw16-multiprocess/.idea/*
+hw16-multiprocess/hw16ganintsev.*
+hw16-multiprocess/target/*

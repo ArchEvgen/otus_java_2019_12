@@ -1,0 +1,17 @@
+server:
+  port: 8080
+#spring.main.web-application-type=none
+spring:
+  main:
+    web-application-type: none
+message-system:
+  type: srv
+  ms-server-port: 9000
+  db-ports:
+    - 9001
+  front-ports:
+    - 9011
+    - 9012
+  front-http-ports:
+    - 8080
+    - 8081
